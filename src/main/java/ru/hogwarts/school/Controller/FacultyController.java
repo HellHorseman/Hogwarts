@@ -46,5 +46,4 @@ public class FacultyController {
         return facultyService.updateFaculty(id, faculty);
     }
 
-
 }
