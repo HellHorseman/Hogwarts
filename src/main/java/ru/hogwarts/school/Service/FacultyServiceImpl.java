@@ -5,8 +5,11 @@ import ru.hogwarts.school.Exception.AlreadyCreatedException;
 import ru.hogwarts.school.Exception.EmptyException;
 import ru.hogwarts.school.Model.Faculty;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class FacultyServiceImpl implements FacultyService {
@@ -45,8 +48,13 @@ public class FacultyServiceImpl implements FacultyService {
     }
 
     @Override
-    public Map<Long, Faculty> getAll() {
-        return facultyMap;
+    public Collection<Faculty> getAll() {
+        return Collections.unmodifiableCollection(facultyMap.values());
+    }
+
+    @Override
+    public Collection<Faculty> getAllByColor(String color) {
+        return getAll().stream().filter(f -> f.getColor().equals(color)).collect(Collectors.toList());
     }
 
 

@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.Model.Faculty;
 import ru.hogwarts.school.Service.FacultyService;
 
-import java.util.Map;
+import java.util.Collection;
 
 @RestController
 @RequestMapping("/faculty")
@@ -17,8 +17,13 @@ public class FacultyController {
     }
 
     @GetMapping
-    public Map<Long, Faculty> getAll() {
+    public Collection<Faculty> getAll() {
         return facultyService.getAll();
+    }
+
+    @GetMapping(params = {"color"})
+    public Collection<Faculty> getAllFilteredByColor(@RequestParam String color) {
+        return facultyService.getAllByColor(color);
     }
 
     @GetMapping("/{id}")

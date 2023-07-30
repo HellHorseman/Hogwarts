@@ -5,8 +5,11 @@ import ru.hogwarts.school.Exception.AlreadyCreatedException;
 import ru.hogwarts.school.Exception.EmptyException;
 import ru.hogwarts.school.Model.Student;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -45,7 +48,12 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Map<Long, Student> getAll() {
-        return studentMap;
+    public Collection<Student> getAll() {
+        return Collections.unmodifiableCollection(studentMap.values());
+    }
+
+    @Override
+    public Collection<Student> getAllByAge(int age) {
+        return getAll().stream().filter(s -> s.getAge() == age).collect(Collectors.toList());
     }
 }

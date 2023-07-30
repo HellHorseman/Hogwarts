@@ -2,7 +2,7 @@ package ru.hogwarts.school.Service;
 
 import ru.hogwarts.school.Model.Faculty;
 
-import java.util.Map;
+import java.util.Collection;
 
 public interface FacultyService {
 
@@ -14,5 +14,7 @@ public interface FacultyService {
 
     void removeFaculty(Long id);
 
-    Map<Long, Faculty> getAll();
+    Collection<Faculty> getAll();
+
+    Collection<Faculty> getAllByColor(String color);
 }
