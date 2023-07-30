@@ -14,7 +14,7 @@ public class StudentServiceImpl implements StudentService {
     private Map<Long, Student> studentMap = new HashMap<>();
 
     @Override
-    public Student creatStudent(Student student) {
+    public Student createStudent(Student student) {
         if (studentMap.containsKey(student.getId())) {
             throw new AlreadyCreatedException("Already created");
         }
@@ -42,5 +42,10 @@ public class StudentServiceImpl implements StudentService {
             studentMap.remove(id);
         }
         throw new EmptyException("Cell is empty");
+    }
+
+    @Override
+    public Map<Long, Student> getAll() {
+        return studentMap;
     }
 }

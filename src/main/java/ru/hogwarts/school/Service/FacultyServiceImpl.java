@@ -43,4 +43,11 @@ public class FacultyServiceImpl implements FacultyService {
         }
         throw new EmptyException("Cell is empty");
     }
+
+    @Override
+    public Map<Long, Faculty> getAll() {
+        return facultyMap;
+    }
+
+
 }
