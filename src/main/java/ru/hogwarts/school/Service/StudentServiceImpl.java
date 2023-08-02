@@ -1,5 +1,6 @@
 package ru.hogwarts.school.Service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.Exception.AlreadyCreatedException;
 import ru.hogwarts.school.Exception.EmptyException;
@@ -12,6 +13,7 @@ import java.util.stream.Collectors;
 @Service
 public class StudentServiceImpl implements StudentService {
 
+    @Autowired
     private final StudentRepository studentRepository;
 
     public StudentServiceImpl(StudentRepository studentRepository) {
