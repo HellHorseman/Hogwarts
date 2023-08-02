@@ -1,20 +1,27 @@
 package ru.hogwarts.school.Model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+
 import java.util.Objects;
 import java.util.Random;
 
+@Entity
 public class Faculty {
 
+    @Id
+    @GeneratedValue
     private Long id;
 
     private String name;
 
     private String color;
 
-    private static long counter = 0L;
+//    private static long counter = 0L;
 
     public Faculty(String name, String color) {
-        this.id = counter++;
+        this.id = getId();
         this.name = name;
         this.color = color;
     }
