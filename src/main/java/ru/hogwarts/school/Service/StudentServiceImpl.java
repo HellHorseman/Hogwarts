@@ -4,52 +4,49 @@ import org.springframework.stereotype.Service;
 import ru.hogwarts.school.Exception.AlreadyCreatedException;
 import ru.hogwarts.school.Exception.EmptyException;
 import ru.hogwarts.school.Model.Student;
+import ru.hogwarts.school.Repository.StudentRepository;
 
 import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
 public class StudentServiceImpl implements StudentService {
 
-    private Map<Long, Student> studentMap = new HashMap<>();
+    private final StudentRepository studentRepository;
+
+    public StudentServiceImpl(StudentRepository studentRepository) {
+        this.studentRepository = studentRepository;
+    }
 
     @Override
     public Student createStudent(Student student) {
-        if (studentMap.containsKey(student.getId())) {
+        if (studentRepository.equals(student.getId())) {
             throw new AlreadyCreatedException("Already created");
         }
-        studentMap.put(student.getId(), student);
-        return student;
+         return studentRepository.save(student);
     }
 
     @Override
     public Student getStudent(Long id) {
-        return studentMap.get(id);
+        return studentRepository.findById(id).get();
     }
 
     @Override
     public Student updateStudent(Long id, Student student) {
-        Student existing = getStudent(id);
-        existing.setName(student.getName());
-        existing.setAge(student.getAge());
-        studentMap.put(id, existing);
-        return existing;
+        return studentRepository.save(student);
     }
 
     @Override
     public void removeStudent(Long id) {
         if (id != null) {
-            studentMap.remove(id);
+            studentRepository.deleteById(id);
         }
         throw new EmptyException("Cell is empty");
     }
 
     @Override
     public Collection<Student> getAll() {
-        return Collections.unmodifiableCollection(studentMap.values());
+        return studentRepository.findAll();
     }
 
     @Override

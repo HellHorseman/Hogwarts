@@ -1,19 +1,26 @@
 package ru.hogwarts.school.Model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+
 import java.util.Objects;
 
+@Entity
 public class Student {
 
-    private Long id;
+    @Id
+    @GeneratedValue
+    private long id;
 
     private String name;
 
     private int age;
 
-    private static long counter = 0l;
+//    private static long counter = 0L;
 
     public Student(String name, int age) {
-        this.id = counter++;
+        this.id = getId();
         this.name = name;
         this.age = age;
     }
