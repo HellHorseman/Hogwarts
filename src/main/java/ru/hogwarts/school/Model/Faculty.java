@@ -20,10 +20,10 @@ public class Faculty {
 
 //    private static long counter = 0L;
 
-    public Faculty(String name, String color) {
+    public Faculty() {
         this.id = getId();
-        this.name = name;
-        this.color = color;
+        this.name = getName();
+        this.color = getColor();
     }
 
     public String getName() {

@@ -19,10 +19,10 @@ public class Student {
 
 //    private static long counter = 0L;
 
-    public Student(String name, int age) {
+    public Student() {
         this.id = getId();
-        this.name = name;
-        this.age = age;
+        this.name = getName();
+        this.age = getAge();
     }
 
     public String getName() {
