@@ -8,7 +8,6 @@ import ru.hogwarts.school.Model.Faculty;
 import ru.hogwarts.school.Repository.FacultyRepository;
 
 import java.util.Collection;
-import java.util.stream.Collectors;
 
 @Service
 public class FacultyServiceImpl implements FacultyService {
@@ -30,11 +29,14 @@ public class FacultyServiceImpl implements FacultyService {
 
     @Override
     public Faculty getFaculty(Long id) {
-        return facultyRepository.findById(id).get();
+        return facultyRepository.findById(id).orElseThrow(() -> new EmptyException("Faculty not found"));
     }
 
     @Override
     public Faculty updateFaculty(Long id, Faculty faculty) {
+        Faculty existing = getFaculty(id);
+        existing.setColor(faculty.getColor());
+        existing.setName(faculty.getName());
         return facultyRepository.save(faculty);
     }
 
@@ -53,6 +55,11 @@ public class FacultyServiceImpl implements FacultyService {
 
     @Override
     public Collection<Faculty> getAllByColor(String color) {
-        return getAll().stream().filter(f -> f.getColor().equals(color)).collect(Collectors.toList());
+        return facultyRepository.getAllByColor(color);
+    }
+
+    @Override
+    public Collection<Faculty> getByColorOrName(String color, String name) {
+        return facultyRepository.findByNameIgnoreCaseOrColorIgnoreCase(color, name);
     }
 }

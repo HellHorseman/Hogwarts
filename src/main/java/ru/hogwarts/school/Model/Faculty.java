@@ -18,10 +18,7 @@ public class Faculty {
 
     private String color;
 
-//    private static long counter = 0L;
-
     public Faculty(String name, String color) {
-        this.id = getId();
         this.name = name;
         this.color = color;
     }

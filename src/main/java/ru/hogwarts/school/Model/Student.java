@@ -17,10 +17,7 @@ public class Student {
 
     private int age;
 
-//    private static long counter = 0L;
-
     public Student(String name, int age) {
-        this.id = getId();
         this.name = name;
         this.age = age;
     }

@@ -17,4 +17,6 @@ public interface FacultyService {
     Collection<Faculty> getAll();
 
     Collection<Faculty> getAllByColor(String color);
+
+    Collection<Faculty> getByColorOrName(String color, String name);
 }

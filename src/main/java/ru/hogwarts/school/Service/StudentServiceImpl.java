@@ -8,7 +8,6 @@ import ru.hogwarts.school.Model.Student;
 import ru.hogwarts.school.Repository.StudentRepository;
 
 import java.util.Collection;
-import java.util.stream.Collectors;
 
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -25,16 +24,19 @@ public class StudentServiceImpl implements StudentService {
         if (studentRepository.equals(student.getId())) {
             throw new AlreadyCreatedException("Already created");
         }
-         return studentRepository.save(student);
+        return studentRepository.save(student);
     }
 
     @Override
     public Student getStudent(Long id) {
-        return studentRepository.findById(id).get();
+        return studentRepository.findById(id).orElseThrow(() -> new EmptyException("Student not found"));
     }
 
     @Override
     public Student updateStudent(Long id, Student student) {
+        Student existing = getStudent(id);
+        existing.setAge(student.getAge());
+        existing.setName(student.getName());
         return studentRepository.save(student);
     }
 
@@ -53,6 +55,11 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Collection<Student> getAllByAge(int age) {
-        return getAll().stream().filter(s -> s.getAge() == age).collect(Collectors.toList());
+        return studentRepository.getAllByAge(age);
+    }
+
+    @Override
+    public Collection<Student> findBetweenAge(int min, int max) {
+        return studentRepository.findByAgeBetween(min, max);
     }
 }
