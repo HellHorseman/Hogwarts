@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.Exception.AlreadyCreatedException;
 import ru.hogwarts.school.Exception.EmptyException;
+import ru.hogwarts.school.Model.Faculty;
 import ru.hogwarts.school.Model.Student;
 import ru.hogwarts.school.Repository.StudentRepository;
 
@@ -51,6 +52,15 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Collection<Student> getAll() {
         return studentRepository.findAll();
+    }
+
+    @Override
+    public Faculty getStudentFaculty(Long studentId) {
+        Student student = studentRepository.findStudentById(studentId);
+        if (student == null) {
+            throw new EmptyException("Student not found");
+        }
+        return student.getFaculty();
     }
 
     @Override

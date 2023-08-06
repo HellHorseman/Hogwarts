@@ -3,6 +3,7 @@ package ru.hogwarts.school.Controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.Model.Faculty;
+import ru.hogwarts.school.Model.Student;
 import ru.hogwarts.school.Service.FacultyService;
 
 import java.util.Collection;
@@ -22,9 +23,20 @@ public class FacultyController {
         return facultyService.getAll();
     }
 
-    @GetMapping(params = {"color"})
+    @GetMapping("{id}/students")
+    public ResponseEntity<Collection<Student>> getFacultyStudents(@PathVariable Long id) {
+        Collection<Student> students = facultyService.getFacultyStudents(id);
+        return ResponseEntity.ok(students);
+    }
+
+    @GetMapping ("/{color}")
     public Collection<Faculty> getAllFilteredByColor(@RequestParam String color) {
         return facultyService.getAllByColor(color);
+    }
+
+    @GetMapping("/{color}, {name}")
+    public Collection<Faculty> getFacultySortByNameOrColor(@RequestParam String color, String name) {
+        return facultyService.getByColorOrName(color, name);
     }
 
     @GetMapping("/{id}")

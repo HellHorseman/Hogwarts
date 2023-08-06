@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.hogwarts.school.Exception.AlreadyCreatedException;
 import ru.hogwarts.school.Exception.EmptyException;
 import ru.hogwarts.school.Model.Faculty;
+import ru.hogwarts.school.Model.Student;
 import ru.hogwarts.school.Repository.FacultyRepository;
 
 import java.util.Collection;
@@ -25,6 +26,15 @@ public class FacultyServiceImpl implements FacultyService {
             throw new AlreadyCreatedException("Already created");
         }
         return facultyRepository.save(faculty);
+    }
+
+    @Override
+    public Collection<Student> getFacultyStudents(Long facultyId) {
+        Faculty faculty = facultyRepository.findFacultyById(facultyId);
+        if (faculty == null) {
+            throw new EmptyException("Faculty not found");
+        }
+        return faculty.getStudents();
     }
 
     @Override
