@@ -34,7 +34,7 @@ public class StudentController {
         return ResponseEntity.ok(faculty);
     }
 
-    @GetMapping("/{min}, {max}")
+    @GetMapping("/betweenAge")
     public Collection<Student> getAllBetweenMinMax(@RequestParam Integer min, Integer max) {
         return studentService.findBetweenAge(min, max);
     }
