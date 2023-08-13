@@ -34,7 +34,7 @@ public class FacultyController {
         return facultyService.getAllByColor(color);
     }
 
-    @GetMapping("/filtredByColorName")
+    @GetMapping("/filteredByColorName")
     public Collection<Faculty> getFacultySortByNameOrColor(@RequestParam String color, String name) {
         return facultyService.getByColorOrName(color, name);
     }
