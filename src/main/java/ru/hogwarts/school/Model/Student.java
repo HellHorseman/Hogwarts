@@ -22,7 +22,7 @@ public class Student {
     @JoinColumn(name = "faculty_id")
     private Faculty faculty;
 
-    public Student(String name, int age) {
+    public Student(Long id, String name, int age) {
         this.name = name;
         this.age = age;
     }
