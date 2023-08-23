@@ -42,9 +42,8 @@ public class FacultyServiceImpl implements FacultyService {
         return facultyRepository.findById(id).orElseThrow(() -> new EmptyException("Faculty not found"));
     }
 
-    @Override
-    public Faculty updateFaculty(Long id, Faculty faculty) {
-        Faculty existing = getFaculty(id);
+    public Faculty updateFaculty(Faculty faculty) {
+        Faculty existing = getFaculty(faculty.getId());
         existing.setColor(faculty.getColor());
         existing.setName(faculty.getName());
         return facultyRepository.save(faculty);

@@ -33,9 +33,8 @@ public class StudentServiceImpl implements StudentService {
         return studentRepository.findById(id).orElseThrow(() -> new EmptyException("Student not found"));
     }
 
-    @Override
-    public Student updateStudent(Long id, Student student) {
-        Student existing = getStudent(id);
+    public Student updateStudent(Student student) {
+        Student existing = getStudent(student.getId());
         existing.setAge(student.getAge());
         existing.setName(student.getName());
         return studentRepository.save(student);

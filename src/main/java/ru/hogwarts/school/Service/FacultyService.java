@@ -13,7 +13,7 @@ public interface FacultyService {
 
     Faculty getFaculty(Long id);
 
-    Faculty updateFaculty(Long id, Faculty faculty);
+    Faculty updateFaculty(Faculty faculty);
 
     void removeFaculty(Long id);
 
