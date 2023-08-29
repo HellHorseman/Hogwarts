@@ -9,6 +9,8 @@ import ru.hogwarts.school.Model.Student;
 import ru.hogwarts.school.Repository.StudentRepository;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -59,7 +61,7 @@ public class StudentServiceImpl implements StudentService {
         if (student == null) {
             throw new EmptyException("Student not found");
         }
-        return student.getFaculty();
+        return getStudent(id).getFaculty();
     }
 
     @Override
@@ -71,4 +73,24 @@ public class StudentServiceImpl implements StudentService {
     public Collection<Student> findBetweenAge(int min, int max) {
         return studentRepository.findByAgeBetween(min, max);
     }
+
+    @Override
+    public Integer getCountAllStudentInSchool() {
+        return studentRepository.getAllStudentInSchool();
+    }
+
+    @Override
+    public Integer getMidlAgeStudent() {
+        return studentRepository.getMidlAgeStudent();
+    }
+
+    @Override
+    public List<Student> getFiveLastStudents() {
+        List<Student> lastFiveStudent = studentRepository.getFiveLastStudents();
+        Collections.reverse(lastFiveStudent);
+        return lastFiveStudent;
+    }
+
+
 }
+
