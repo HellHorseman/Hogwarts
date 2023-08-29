@@ -26,12 +26,12 @@ public class AvatarController {
     }
 
     @PostMapping(value = "/students/{id}/avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public Avatar upload(@PathVariable Long studentId, @RequestParam MultipartFile file) throws IOException {
-        return avatarService.upload(studentId, file);
+    public Avatar upload(@PathVariable Long id, @RequestParam MultipartFile file) throws IOException {
+        return avatarService.upload(id, file);
     }
 
     @GetMapping("/avatar/{avatarId}/fromDB")
-    public ResponseEntity<byte[]> loadFromDB(Long avatarId) {
+    public ResponseEntity<byte[]> loadFromDB(@PathVariable Long avatarId) {
         Avatar avatar = avatarService.getAvatar(avatarId);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.parseMediaType(avatar.getMediaType()));

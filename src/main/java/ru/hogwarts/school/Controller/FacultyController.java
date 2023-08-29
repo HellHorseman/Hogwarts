@@ -29,13 +29,13 @@ public class FacultyController {
         return ResponseEntity.ok(students);
     }
 
-    @GetMapping ("/{color}")
+    @GetMapping ("/color")
     public Collection<Faculty> getAllFilteredByColor(@RequestParam String color) {
         return facultyService.getAllByColor(color);
     }
 
     @GetMapping("/filteredByColorName")
-    public Collection<Faculty> getFacultySortByNameOrColor(@RequestParam String color, String name) {
+    public Collection<Faculty> getFacultySortByNameOrColor(@RequestParam(required = false) String color, @RequestParam(required = false) String name) {
         return facultyService.getByColorOrName(color, name);
     }
 

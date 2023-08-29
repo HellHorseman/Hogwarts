@@ -54,8 +54,8 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Faculty getStudentFaculty(Long studentId) {
-        Student student = studentRepository.findStudentById(studentId);
+    public Faculty getStudentFaculty(Long id) {
+        Student student = studentRepository.findStudentById(id);
         if (student == null) {
             throw new EmptyException("Student not found");
         }

@@ -23,7 +23,7 @@ public class StudentController {
         return studentService.getAll();
     }
 
-    @GetMapping("/{age}")
+    @GetMapping("/age")
     public Collection<Student> getAllFilteredByAge(@RequestParam Integer age) {
         return studentService.getAllByAge(age);
     }
@@ -35,7 +35,7 @@ public class StudentController {
     }
 
     @GetMapping("/betweenAge")
-    public Collection<Student> getAllBetweenMinMax(@RequestParam Integer min, Integer max) {
+    public Collection<Student> getAllBetweenMinMax(@RequestParam Integer min, @RequestParam Integer max) {
         return studentService.findBetweenAge(min, max);
     }
 
