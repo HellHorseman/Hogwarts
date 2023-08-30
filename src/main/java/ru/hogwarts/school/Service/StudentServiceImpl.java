@@ -1,59 +1,96 @@
 package ru.hogwarts.school.Service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.Exception.AlreadyCreatedException;
 import ru.hogwarts.school.Exception.EmptyException;
+import ru.hogwarts.school.Model.Faculty;
 import ru.hogwarts.school.Model.Student;
+import ru.hogwarts.school.Repository.StudentRepository;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.List;
 
 @Service
 public class StudentServiceImpl implements StudentService {
 
-    private Map<Long, Student> studentMap = new HashMap<>();
+    @Autowired
+    private final StudentRepository studentRepository;
+
+    public StudentServiceImpl(StudentRepository studentRepository) {
+        this.studentRepository = studentRepository;
+    }
 
     @Override
     public Student createStudent(Student student) {
-        if (studentMap.containsKey(student.getId())) {
+        if (studentRepository.equals(student.getId())) {
             throw new AlreadyCreatedException("Already created");
         }
-        studentMap.put(student.getId(), student);
-        return student;
+        return studentRepository.save(student);
     }
 
     @Override
     public Student getStudent(Long id) {
-        return studentMap.get(id);
+        return studentRepository.findById(id).orElseThrow(() -> new EmptyException("Student not found"));
     }
 
-    @Override
-    public Student updateStudent(Long id, Student student) {
-        Student existing = getStudent(id);
-        existing.setName(student.getName());
+    public Student updateStudent(Student student) {
+        Student existing = getStudent(student.getId());
         existing.setAge(student.getAge());
-        studentMap.put(id, existing);
-        return existing;
+        existing.setName(student.getName());
+        return studentRepository.save(student);
     }
 
     @Override
     public void removeStudent(Long id) {
         if (id != null) {
-            studentMap.remove(id);
+            studentRepository.deleteById(id);
         }
         throw new EmptyException("Cell is empty");
     }
 
     @Override
     public Collection<Student> getAll() {
-        return Collections.unmodifiableCollection(studentMap.values());
+        return studentRepository.findAll();
+    }
+
+    @Override
+    public Faculty getStudentFaculty(Long id) {
+        Student student = studentRepository.findStudentById(id);
+        if (student == null) {
+            throw new EmptyException("Student not found");
+        }
+        return getStudent(id).getFaculty();
     }
 
     @Override
     public Collection<Student> getAllByAge(int age) {
-        return getAll().stream().filter(s -> s.getAge() == age).collect(Collectors.toList());
+        return studentRepository.getAllByAge(age);
     }
+
+    @Override
+    public Collection<Student> findBetweenAge(int min, int max) {
+        return studentRepository.findByAgeBetween(min, max);
+    }
+
+    @Override
+    public Integer getCountAllStudentInSchool() {
+        return studentRepository.getAllStudentInSchool();
+    }
+
+    @Override
+    public Integer getMidlAgeStudent() {
+        return studentRepository.getMidlAgeStudent();
+    }
+
+    @Override
+    public List<Student> getFiveLastStudents() {
+        List<Student> lastFiveStudent = studentRepository.getFiveLastStudents();
+        Collections.reverse(lastFiveStudent);
+        return lastFiveStudent;
+    }
+
+
 }
+
