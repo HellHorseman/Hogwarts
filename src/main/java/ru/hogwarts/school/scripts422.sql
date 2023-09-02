@@ -1,19 +1,19 @@
-CREATE TABLE People (
-                        PersonID SERIAL PRIMARY KEY,
-                        Name VARCHAR(50) NOT NULL,
-                        Age INT NOT NULL,
-                        HasLicense BOOLEAN NOT NULL
+CREATE TABLE people (
+                        person_id SERIAL PRIMARY KEY,
+                        name VARCHAR(50) NOT NULL,
+                        age INT NOT NULL,
+                        has_license BOOLEAN NOT NULL
 );
 
-CREATE TABLE Cars (
-                      CarID SERIAL PRIMARY KEY,
-                      Brand VARCHAR(50) NOT NULL,
-                      Model VARCHAR(50) NOT NULL,
-                      Price DECIMAL(10, 2) NOT NULL
+CREATE TABLE cars (
+                      car_id SERIAL PRIMARY KEY,
+                      brand VARCHAR(50) NOT NULL,
+                      model VARCHAR(50) NOT NULL,
+                      price DECIMAL(10, 2) NOT NULL
 );
 
-CREATE TABLE PeopleCars (
-                            PersonID INT REFERENCES People(PersonID),
-                            CarID INT REFERENCES Cars(CarID),
-                            PRIMARY KEY (PersonID, CarID)
+CREATE TABLE peopleCars (
+                            person_id INT REFERENCES people(person_id),
+                            car_id INT REFERENCES cars(car_id),
+                            PRIMARY KEY (person_id, car_id)
 );
