@@ -1,0 +1,9 @@
+ALTER TABLE Student ADD CONSTRAINT CheckStudentAge CHECK (Age >= 16);
+
+ALTER TABLE Student ADD CONSTRAINT UniqueStudentName UNIQUE (Name);
+
+ALTER TABLE Student ALTER COLUMN name SET NOT NULL;
+
+ALTER TABLE Faculty ADD CONSTRAINT UniqueFacultyNameColor UNIQUE (Name, Color);
+
+ALTER TABLE Student ALTER COLUMN Age SET DEFAULT 20;
