@@ -13,12 +13,15 @@ import ru.hogwarts.school.Repository.StudentRepository;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class StudentServiceImpl implements StudentService {
 
     @Autowired
     private final StudentRepository studentRepository;
+
+    private final Object lock = new Object();
 
     private final Logger logger = LoggerFactory.getLogger(StudentServiceImpl.class);
 
@@ -106,6 +109,64 @@ public class StudentServiceImpl implements StudentService {
         return lastFiveStudent;
     }
 
+    @Override
+    public void printAllStudents() {
+        List<Student> students = studentRepository.findAll();
 
+        List<String> studentName = students.stream()
+                .map(Student::getName)
+                .collect(Collectors.toList());
+
+        System.out.println("Main thread");
+        studentName.stream().limit(2).forEach(System.out::println);
+
+        new Thread(() -> {
+            System.out.println("1st parallel thread");
+            studentName.stream().skip(2).limit(2).forEach(System.out::println);
+        }).start();
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+
+        }
+
+        new Thread(() -> {
+            System.out.println("2nd parallel thread");
+            studentName.stream().skip(4).limit(2).forEach(System.out::println);
+        }).start();
+    }
+
+    @Override
+    public void printNamesSync() {
+        List<Student> students = studentRepository.findAll();
+
+        System.out.println("Main thread");
+        synchronizePart(students, 0);
+        synchronizePart(students, 1);
+
+        new Thread(() -> {
+            System.out.println("1st parallel thread");
+            synchronizePart(students, 2);
+            synchronizePart(students, 3);
+        }).start();
+
+
+        new Thread(() -> {
+            System.out.println("2nd parallel thread");
+            synchronizePart(students, 4);
+            synchronizePart(students, 5);
+        }).start();
+    }
+
+    private void synchronizePart(List<Student> students, int index) {
+        synchronized (lock) {
+            if (index >= 0 && index < students.size()) {
+                System.out.println(students.get(index).getName());
+            }
+        }
+    }
 }
+
+
 

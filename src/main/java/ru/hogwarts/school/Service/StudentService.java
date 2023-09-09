@@ -29,4 +29,8 @@ public interface StudentService {
     Integer getMidlAgeStudent();
 
     List<Student> getFiveLastStudents();
+
+    void printAllStudents();
+
+    void printNamesSync();
 }

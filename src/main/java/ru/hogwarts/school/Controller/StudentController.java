@@ -59,4 +59,16 @@ public class StudentController {
     public Student updateStudent(@PathVariable Long id, @RequestBody Student student) {
         return studentService.updateStudent(student);
     }
+
+    @GetMapping("/print-students")
+    public ResponseEntity<String> printNames() {
+        studentService.printAllStudents();
+        return ResponseEntity.ok("Start in progress");
+    }
+
+    @GetMapping("/print-students-sync")
+    public ResponseEntity<String> printNamesSync() {
+        studentService.printNamesSync();
+        return ResponseEntity.ok("Start in progress");
+    }
 }
