@@ -1,5 +1,7 @@
 package ru.hogwarts.school.Service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -24,6 +26,8 @@ public class AvatarServiceImpl implements AvatarService {
 
     private final StudentRepository studentRepository;
 
+    private final Logger logger = LoggerFactory.getLogger(AvatarServiceImpl.class);
+
     public AvatarServiceImpl(AvatarRepository avatarRepository, StudentRepository studentRepository) {
         this.avatarRepository = avatarRepository;
         this.studentRepository = studentRepository;
@@ -31,6 +35,7 @@ public class AvatarServiceImpl implements AvatarService {
 
     @Override
     public Avatar upload(Long studentId, MultipartFile file) throws IOException {
+        logger.info("Avatar upload is running");
         Student student = studentRepository.findById(studentId).orElseThrow(() -> new EmptyException("Student not found"));
         Path filePath = Path.of("./avatar", student + "." + getExtension(file.getOriginalFilename()));
 
@@ -56,11 +61,13 @@ public class AvatarServiceImpl implements AvatarService {
 
     @Override
     public Avatar getAvatar(Long id) {
+        logger.info("Avatar getAvatar is running");
         return avatarRepository.findById(id).orElseThrow(() -> new EmptyException("Avatar not found"));
     }
 
     @Override
     public List<Avatar> getAllAvatars(Integer pageNumber, Integer pageSize) {
+        logger.info("Avatar getAllAvatars is running");
         PageRequest pageRequest = PageRequest.of(pageNumber, pageSize);
         return avatarRepository.findAll(pageRequest).getContent();
     }
