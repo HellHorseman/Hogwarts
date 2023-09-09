@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.hogwarts.school.Service.StatisticService;
 
 import java.util.List;
+import java.util.OptionalDouble;
 
 @RestController
 @RequestMapping("/statistic")
@@ -20,5 +21,10 @@ public class StatisticController {
     @GetMapping("/start-a")
     public List<String> getStudentNameStartsA() {
         return statisticService.getStudentNameStartsA();
+    }
+
+    @GetMapping("/ave-age")
+    public OptionalDouble getAverageAge() {
+        return statisticService.getAverageAge();
     }
 }
