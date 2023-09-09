@@ -27,4 +27,9 @@ public class StatisticController {
     public OptionalDouble getAverageAge() {
         return statisticService.getAverageAge();
     }
+
+    @GetMapping("/longest-name")
+    public String getLongestFacultyName() {
+        return statisticService.getLongestFacultyName();
+    }
 }

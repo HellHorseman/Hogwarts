@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import ru.hogwarts.school.Model.Student;
 import ru.hogwarts.school.Repository.StudentRepository;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.OptionalDouble;
 import java.util.stream.Collectors;
@@ -33,5 +34,14 @@ private final StudentRepository studentRepository;
                 .stream()
                 .mapToInt(Student::getAge)
                 .average();
+    }
+
+    @Override
+    public String getLongestFacultyName() {
+        return studentRepository.findAll()
+                .stream()
+                .map(Student :: getName)
+                .max(Comparator.comparingInt(String::length))
+                .orElse("");
     }
 }

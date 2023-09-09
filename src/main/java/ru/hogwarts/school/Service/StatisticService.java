@@ -8,4 +8,6 @@ public interface StatisticService {
     List<String> getStudentNameStartsA();
 
     OptionalDouble getAverageAge();
+
+    String getLongestFacultyName();
 }
