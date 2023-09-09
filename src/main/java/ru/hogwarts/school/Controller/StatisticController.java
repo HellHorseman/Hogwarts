@@ -1,7 +1,6 @@
 package ru.hogwarts.school.Controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.hogwarts.school.Service.StatisticService;
@@ -35,7 +34,7 @@ public class StatisticController {
         return statisticService.getLongestFacultyName();
     }
 
-    @PostMapping("/calculate")
+    @GetMapping("/calculate")
     public Integer calculate() {
         int sum = Stream.iterate(1, a -> a +1)
                 .limit(1_000_000)
